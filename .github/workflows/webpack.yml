@@ -1,0 +1,45 @@
+name: Build and deploy App
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - id: 'update_worksheet'
+      uses: jroehl/gsheet.action@v2.0.0
+      with:
+        spreadsheetId: '1e4CdoVbDLkUi6Gli7RamC9R_YVTKrk46P23b53lNSXc'
+        commands: |
+          [
+            { "command": "getData", "args": { "range": "'polygons'!A2:E111" } },
+            { "command": "getData", "args": { "range": "'houses'!A2:F111" } }
+          ]
+      env:
+        GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}
+        GSHEET_PRIVATE_KEY: ${{ secrets.GSHEET_PRIVATE_KEY }}
+
+    - name: dump results
+      env:
+        RESULTS: ${{ steps.update_worksheet.outputs.results }}
+      run: echo "$RESULTS" >> ./res.json
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./

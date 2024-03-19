@@ -26,8 +26,8 @@ jobs:
         spreadsheetId: '1e4CdoVbDLkUi6Gli7RamC9R_YVTKrk46P23b53lNSXc'
         commands: |
           [
-            { "command": "getData", "args": { "range": "'polygons'!A2:E111" } },
-            { "command": "getData", "args": { "range": "'houses'!A2:F111" } }
+            { "command": "getData", "args": { "range": "'polygons'!A2:E111", "hasHeaderRow": true } },
+            { "command": "getData", "args": { "range": "'houses'!A2:F111", "hasHeaderRow": true } }
           ]
       env:
         GSHEET_CLIENT_EMAIL: ${{ secrets.GSHEET_CLIENT_EMAIL }}

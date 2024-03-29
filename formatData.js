@@ -5,21 +5,7 @@ const formattedObj = {};
 
 obj.results.forEach(({result}) => {
     const [tabType] = result.range.split('!');
-    let titles = [];
-    const resArr = [];
-    result.rawData.forEach((row, rowIndex) => {
-        const res = {};
-        if (rowIndex === 0) {
-            titles = row;
-        } else {
-            row.forEach((cell, cellIndex) => {
-                const fieldName = titles[cellIndex];
-                res[fieldName] = cell;
-            });
-            resArr.push(res)
-        }
-    });
-    formattedObj[tabType] = resArr;
+    formattedObj[tabType] = result.formatted;
 });
 
 fs.writeFileSync("./dist/res2.json", JSON.stringify(formattedObj));

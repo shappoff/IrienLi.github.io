@@ -1,5 +1,5 @@
 const fs = require('fs');
-const obj = JSON.parse(fs.readFileSync('./res.json', 'utf8'));
+const obj = JSON.parse(fs.readFileSync('./res1.json', 'utf8'));
 
 const formattedObj = {};
 
@@ -22,6 +22,6 @@ obj.results.forEach(({result}) => {
     formattedObj[tabType] = resArr;
 });
 
-fs.writeFileSync("./dist/res.json", JSON.stringify(formattedObj));
+fs.writeFileSync("./dist/res2.json", JSON.stringify(formattedObj));
 
 // console.log(formattedObj);

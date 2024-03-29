@@ -36,10 +36,14 @@ jobs:
     - name: dump results
       env:
         RESULTS: ${{ steps.update_worksheet.outputs.results }}
-      run: echo "$RESULTS" >> ./res.json
+      run: |
+        mkdir ./dist
+        echo "$RESULTS" >> ./res.json
+      
+    - run: node formatData.js
 
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
+        publish_dir: ./dist

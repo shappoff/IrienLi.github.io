@@ -1,5 +1,5 @@
 const fs = require('fs');
-const obj = JSON.parse(fs.readFileSync('./res1.json', 'utf8'));
+const obj = JSON.parse(fs.readFileSync('./dist/res1.json', 'utf8'));
 
 const formattedObj = {};
 

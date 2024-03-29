@@ -38,7 +38,7 @@ jobs:
         RESULTS: ${{ steps.update_worksheet.outputs.results }}
       run: |
         mkdir ./dist
-        echo "$RESULTS" >> ./res.json
+        echo "$RESULTS" >> ./dist/res1.json
       
     - run: node formatData.js
 
